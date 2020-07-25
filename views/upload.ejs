@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Video</title>
+</head>
+<body style="text-align: center;"> 
+    <br>
+    <p>Upload Video</p>
+    <br>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="text" name="videoName" id="videoName" /> <br><br> 
+        <input type="file" name="videoFile" id="videoFile" /> <br><br>
+        <input type="submit" name="sub" id="sub" /> <br><br>
+    </form>
+    <% if(result != "undefined") { %> 
+        <p><%= result %></p>
+    <% } %>
+
+    <br>
+
+    <a href="/videos">View Videos</a>
+</body>
+</html>
