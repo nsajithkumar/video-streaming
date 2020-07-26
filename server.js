@@ -19,13 +19,17 @@ app.post("/upload", (req, res) => {
     
     form.parse(req, function (err, fields, files) {
         let videoName = fields.videoName;
+        videoName = videoName.replace(" ", "-");
         let oldpath = files.videoFile.path;
 
         let d = new Date();
         let timeStamp = d.getTime();
 
+        let splitArray = files.videoFile.name.split(".");
+        let ext = splitArray[splitArray.length - 1];
+
         var source = fs.createReadStream(oldpath);
-        var dest = fs.createWriteStream('./public/videos/' + videoName + "_" + timeStamp + "_" + files.videoFile.name);
+        var dest = fs.createWriteStream('./public/videos/' + videoName + "_" + timeStamp + "." + ext);
 
         source.pipe(dest);
         source.on('end', function() {
@@ -50,7 +54,13 @@ app.get("/videos", (req, res) => {
     res.render("videos", {"videoList": totalFiles});
 });
 
+app.get("/videoShow/:videoName", (req, res) => {
+    let videoName = req.params.videoName;
+    res.render("videoRender", {"videoName": videoName});
+});
+
 app.get("/viewVideo/:videoName", (req, res) => {
+
     const path = "./public/videos/" + req.params.videoName;
 
 	const stat = fs.statSync(path)

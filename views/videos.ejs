@@ -1,16 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Videos</title>
-</head>
-<body style="text-align: center;">
-    <br>
-    Uploaded Videos
-    <br><br>
-    <% videoList.forEach((file) => { %>
-        <a href='/viewVideo/<%= file %>' ><%= file.split("_")[0] %></a><br><br>
-    <% }) %>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Videos</title>
+    </head>
+    <body style="text-align: center;">
+
+        <div>
+            <br>
+            Uploaded Videos
+            <br><br>
+            <% videoList.forEach((file) => { %>
+                <input type="button" value='<%= file.split("_")[0] %>' onclick=loadVideo("<%= file %>") /><br><br>
+            <% }) %>
+        </div>
+        
+        <div>
+            <iframe frameborder="0" scrolling="no" onload="resizeIframe(this)" style="display: none; height: 100%; width: 100%;" id="iframeCheck" src=""></iframe>
+        </div>
+        
+    </body>
+
+    <script>
+        const loadVideo = (fileName) => {
+            
+            document.getElementById("iframeCheck").style.display = "";
+            document.getElementById("iframeCheck").setAttribute("src", `http://localhost:3000/videoShow/${fileName}`);
+        }
+
+        function resizeIframe(obj) {
+            obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+        }
+
+    </script>
+
 </html>
